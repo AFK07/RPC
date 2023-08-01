@@ -7,7 +7,7 @@ from tkinter import *
 schema = {
     "rock":{"rock":1, "paper":0, "scissors":2},
     "paper":{"rock":2, "paper":1, "scissors":0},
-    "scissors":{"rock":0, "paper":2, "scissors":1}      # rules that determine whether the  
+    "scissors":{"rock":0, "paper":2, "scissors":1}      # rules that determine the win/loss conditions
 
 }
 computer_score = 0
@@ -16,13 +16,13 @@ player_score = 0
 #functions: technically this bit is the outcome handler
 def outcome_handler(user_choices):                       #user_choice will be passed by the buttons
     global computer_score
-    global player_score                                  #globalising variables so it can be accessed from top
+    global player_score                                  #globalising variables so it can be accessed from all part of the code
     outcomes = ["rock", "paper", "scissors"]
     random_number = random.randint(0,2)                  #helps the computer choose the given options 
 #   print(outcomes[random_number])                       #keeping this output will have our computer choices printed in the terminal
     computer_choice = outcomes[random_number]            #random number chooses between 0, 1 & 2 which essentially are rock, paper and scissors
     
-    result = schema[user_choices][computer_choice]       #what does this do? check the schema where the rules are demonstrated. It check the conditions on which choices are superior
+    result = schema[user_choices][computer_choice]       #what does this do? check the schema where the rules are demonstrated. It checks the conditions on which choices are superior
     
     #this function displays the selected choices
     player_choice_label.config(fg="green", text="Player Choice : " + str(user_choices))      # the str() displays the selected option for both users
