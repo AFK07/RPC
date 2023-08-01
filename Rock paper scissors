@@ -1,0 +1,85 @@
+# note: this program does not include OOP. This is the simplest version of this program where I intend to apply OOP in another program
+
+import random                                           #allows random decisions, just like you with girls
+from tkinter import *
+
+#dict & vars
+schema = {
+    "rock":{"rock":1, "paper":0, "scissors":2},
+    "paper":{"rock":2, "paper":1, "scissors":0},
+    "scissors":{"rock":0, "paper":2, "scissors":1}      # rules that determine whether the  
+
+}
+computer_score = 0
+player_score = 0
+
+#functions: technically this bit is the outcome handler
+def outcome_handler(user_choices):                       #user_choice will be passed by the buttons
+    global computer_score
+    global player_score                                  #globalising variables so it can be accessed from top
+    outcomes = ["rock", "paper", "scissors"]
+    random_number = random.randint(0,2)                  #helps the computer choose the given options 
+#   print(outcomes[random_number])                       #keeping this output will have our computer choices printed in the terminal
+    computer_choice = outcomes[random_number]            #random number chooses between 0, 1 & 2 which essentially are rock, paper and scissors
+    
+    result = schema[user_choices][computer_choice]       #what does this do? check the schema where the rules are demonstrated. It check the conditions on which choices are superior
+    
+    #this function displays the selected choices
+    player_choice_label.config(fg="green", text="Player Choice : " + str(user_choices))      # the str() displays the selected option for both users
+    computer_choice_label.config(fg="red", text="Computer Choice : " + str(computer_choice))
+
+    if result == 2:
+        player_score = player_score + 1
+        player_score_label.config(text="player : " + str(player_score))
+        outcome_label.config(fg="blue", text="Outcome : Player Won")
+    elif result == 1:
+        player_score =player_score + 0
+        computer_score = computer_score + 0
+        player_score_label.config(text="Player : " + str(player_score))
+        computer_score_label.config(text="Computer : " + str(computer_score))
+        outcome_label.config(fg="blue", text="Outcome : Draw")
+    elif result == 0:
+        computer_score = computer_score + 1
+        computer_score_label.config(text="Computer : " + str(computer_score))
+        outcome_label.config(fg="blue", text="Outcome : Computer Won")
+    #3 conditions given where a win gives one point and a draw gives 0
+
+#Mainscreen
+window = Tk() #assigning the value to Tk
+window.title("Rock, Paper, or Scissor")
+window.resizable(False, False)
+
+#label
+Label(window, text="Rock, Paper, Scissors", font=("calibri", 14)).grid(row=0, sticky=N, pady=10, padx=200) 
+# window as the first input in label as its destination
+# sticky N or S direction ? But padx and pady to precisely allocate the label texts
+Label(window, text="Please select an option.", font=("calibri", 12)).grid(row=1, sticky=N)
+# padx and pady on the second label will add more space if required
+
+#displays the score, base value 0
+player_score_label = Label(window, text="Player: 0", font=("calibri", 12))
+player_score_label.grid(row=2, sticky=W)
+computer_score_label = Label(window, text="Player: 0", font=("calibri", 12))
+computer_score_label.grid(row=2, sticky=E)
+
+#we'll get on to this later
+player_choice_label = Label(window, font=("calibri", 12))
+player_choice_label.grid(row=3, sticky=W)
+computer_choice_label = Label(window, font=("calibri", 12))
+computer_choice_label.grid(row=3, sticky=E)
+
+outcome_label = Label(window, font=("calibri", 12))
+outcome_label.grid(row=3, sticky=N)
+
+#Buttons
+#highlights here: command=lambda:outcome_handler()
+#whenever we click the buttons, the outcome handler runs, which means there will be much more to work with it.
+Button(window, text="Rock", width=15, command=lambda:outcome_handler("rock")).grid(row=4, sticky=W, padx=5, pady=5)
+Button(window, text="Paper", width=15, command=lambda:outcome_handler("paper")).grid(row=4, sticky=N,padx=5, pady=5)
+Button(window, text="Scissor", width=15, command=lambda:outcome_handler("scissor")).grid(row=4, sticky=E,padx=5, pady=5)
+
+#dummy label
+#for extra space under the buttons
+Label(window).grid(row=5)
+
+window.mainloop() # prevents the window from closing instantly
